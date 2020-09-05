@@ -1,5 +1,5 @@
 {
-  "name": "rmc-api/laravel",
+  "name": "rmc/laravel-api",
   "type": "library",
   "keywords": ["laravel", "RMC", "REST", "api", "rest-api"],
   "description": "Route-Model-Controller for Laravel REST API",
