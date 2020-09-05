@@ -20,5 +20,7 @@
       "name": "megyik88",
       "email": "megyik88@gmail.com"
     }
-  ]
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
