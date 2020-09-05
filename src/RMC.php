@@ -16,7 +16,7 @@ Route cache:
 */
 
 
-namespace rmc;
+namespace api;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
