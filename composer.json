@@ -6,11 +6,6 @@
   "require": {
     "php": "^7.0"
   },
-  "autoload": {
-    "classmap": [
-		"api"
-	]
-  },
   "license": "MIT",
   "authors": [
     {
