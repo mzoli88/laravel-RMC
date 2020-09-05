@@ -1,6 +1,6 @@
 {
   "name": "rmc/laravel-api",
-  "type": "library",
+  "type": "project",
   "keywords": ["laravel", "RMC", "REST", "api", "rest-api"],
   "description": "Route-Model-Controller for Laravel REST API",
   "require": {
@@ -9,11 +9,7 @@
   "autoload": {
     "psr-4": {
       "api\\": "src/"
-    },
-    "classmap": [
-      "src/",
-      "/api/"
-    ]
+    }
   },
   "license": "MIT",
   "authors": [
