@@ -1,0 +1,26 @@
+{
+  "name": "laravel-RMC",
+  "type": "library",
+  "keywords": ["laravel", "RMC", "REST", "api", "rest-api"],
+  "description": "Route-Model-Controller for Laravel REST API",
+  "require": {
+    "php": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "api": "src/"
+    },
+    "classmap": [
+		"api"
+	]
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "megyik88",
+      "email": "megyik88@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
