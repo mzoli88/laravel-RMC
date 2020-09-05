@@ -9,7 +9,11 @@
   "autoload": {
     "psr-4": {
       "api\\": "src/"
-    }
+    },
+    "classmap": [
+      "src/",
+      "/api/"
+    ]
   },
   "license": "MIT",
   "authors": [
