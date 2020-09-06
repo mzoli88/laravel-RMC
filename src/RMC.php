@@ -19,6 +19,7 @@ Route cache:
 namespace api;
 
 use Exception;
+use DynamicRouter\Router;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
@@ -106,7 +107,8 @@ class RMC
     }
 
     static function route(){
-        return Router::doRouter();
+        Router::$controller_ending = 'RMC';
+        Router::route();
     }
   
 }
