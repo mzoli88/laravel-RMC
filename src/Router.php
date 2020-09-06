@@ -47,7 +47,7 @@ class Router
     }
 
     static function getCtFromRequest(){
-        $ct = preg_replace(['/^\//'],'',$_SERVER['REQUEST_URI']);
+        $ct = preg_replace(['/^\//'],'',$_SERVER['REDIRECT_URL']);
         $tmpct = explode('/',$ct);
         $lastCtname = ucfirst(end($tmpct));
         $tmpct[key($tmpct)] = $lastCtname;
