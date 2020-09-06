@@ -88,7 +88,7 @@ class Search
                     $v = request()->query(isset($tmp[1]) ? $tmp[1] : $prop);
                 }
                 if ($v) {
-                    if(!$rel)$prop = $this->table . "." . $prop;
+                    if(!$rel)$prop = $query->getModel()->table . "." . $prop;
                     $prop = str_replace(['<', '>'], '', $prop);
                     if(is_array($type)){
                         $or_count++;

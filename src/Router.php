@@ -16,7 +16,7 @@ class Router
     static function doRouter(){
         Route::namespace('\\api')->group(function () {
             if(app()->runningInConsole()){
-                if(in_array('route:cache',$_SERVER['argv'])){
+                if(in_array('route:cache',$_SERVER['argv']) || in_array('optimize',$_SERVER['argv']) ){
                     $classmap = (new ComposerClassMap)->listClasses();
                     $group_prefix = self::getGroup_prefix();
                     //összes Route beállítása

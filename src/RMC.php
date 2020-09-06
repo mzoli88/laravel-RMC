@@ -60,20 +60,19 @@ class RMC
 
 
     public function doList(){
-        $model = new $this->model;
         $query = $this->model::query();
         if(method_exists($this,'select')){
             Select::do($query,call_user_func_array([$this,'select'],['list']));
         }
-        if(method_exists($model,'search')){
-            new Search($query,$model->search());
+        if(method_exists($query->getModel(),'search')){
+            new Search($query,$query->getModel()->search());
         }
         return $query;
     }
 
     public function doView($id){
-        $model = new $this->model;
-        $query = $this->model::where($model->getKeyName(),$id);
+        $query = $this->model::query();
+        $query->where($query->getModel()->getKeyName(),$id);
         if(method_exists($this,'select')){
             Select::do($query,call_user_func_array([$this,'select'],['view']));
         }
