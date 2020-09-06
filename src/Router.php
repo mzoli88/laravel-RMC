@@ -4,21 +4,26 @@ namespace api;
 
 use Exception;
 use Illuminate\Support\Facades\Route;
+use Facade\Ignition\Support\ComposerClassMap;
+
 
 class Router
 {
+
+    // php artisan optimize
+    // php artisan optimize:clear
+    
     static function doRouter(){
-        // php artisan route:cache
-        // php artisan route:clear
-        // php artisan optimize
-        // php artisan optimize:clear
         Route::namespace('\\api')->group(function () {
+            $groupStacks =  Route::getGroupStack();
+            $lastGroupStacks = end($groupStacks);
+            // $group_namespace = $lastGroupStacks['namespace'];
+            $group_prefix = str_replace('/','\\\\',$lastGroupStacks['prefix']);
             
-            $classmap = (new \Facade\Ignition\Support\ComposerClassMap)->listClasses();
-            $group_prefix = str_replace('/','\\\\',Route::getLastGroupPrefix());
             if(empty($group_prefix) || $group_prefix == "api")throw new Exception('no group');
             
             if(self::isConsole('route:cache')){
+                $classmap = (new ComposerClassMap)->listClasses();
                 //összes Route beállítása
                 foreach($classmap as $class => $file){
                     if(preg_match('/^'.$group_prefix.'.*RMC$/',$class)){
@@ -32,8 +37,6 @@ class Router
                 $full_ct = self::getCtFromRequest();
                 self::_routeformat($full_ct,$group_prefix);
             }
-
-
         });
     }
 
@@ -42,8 +45,7 @@ class Router
     }
 
     static function getCtFromRequest(){
-        $request = app('request');
-        $ct = preg_replace(['/^\//'],'',$request->getRequestUri());
+        $ct = preg_replace(['/^\//'],'',$_SERVER['REQUEST_URI']);
         $tmpct = explode('/',$ct);
         $lastCtname = ucfirst(end($tmpct));
         $tmpct[key($tmpct)] = $lastCtname;
