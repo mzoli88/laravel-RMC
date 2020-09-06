@@ -15,33 +15,35 @@ class Router
     
     static function doRouter(){
         Route::namespace('\\api')->group(function () {
-            $groupStacks =  Route::getGroupStack();
-            $lastGroupStacks = end($groupStacks);
-            // $group_namespace = $lastGroupStacks['namespace'];
-            $group_prefix = str_replace('/','\\\\',$lastGroupStacks['prefix']);
-            
-            if(empty($group_prefix) || $group_prefix == "api")throw new Exception('no group');
-            
-            if(self::isConsole('route:cache')){
-                $classmap = (new ComposerClassMap)->listClasses();
-                //összes Route beállítása
-                foreach($classmap as $class => $file){
-                    if(preg_match('/^'.$group_prefix.'.*RMC$/',$class)){
-                        if($class=='api\RMC')continue;
-                        echo " - ".$class."\n";
-                        self::_routeformat($class,$group_prefix);
+            if(app()->runningInConsole()){
+                if(in_array('route:cache',$_SERVER['argv'])){
+                    $classmap = (new ComposerClassMap)->listClasses();
+                    $group_prefix = self::getGroup_prefix();
+                    //összes Route beállítása
+                    foreach($classmap as $class => $file){
+                        if(preg_match('/^'.$group_prefix.'.*RMC$/',$class)){
+                            if($class=='api\RMC')continue;
+                            echo " - ".$class."\n";
+                            self::_routeformat($class,$group_prefix);
+                        }
                     }
                 }
             }else{
                 //aktuális route beállítása Autoloader alapján
                 $full_ct = self::getCtFromRequest();
+                $group_prefix = self::getGroup_prefix();
                 self::_routeformat($full_ct,$group_prefix);
             }
         });
     }
 
-    static function isConsole($command){
-        return app()->runningInConsole() ? in_array($command,$_SERVER['argv']) : false;
+    static function getGroup_prefix(){
+        $groupStacks =  Route::getGroupStack();
+        $lastGroupStacks = end($groupStacks);
+        // $group_namespace = $lastGroupStacks['namespace'];
+        $group_prefix = str_replace('/','\\\\',$lastGroupStacks['prefix']);
+        if(empty($group_prefix) || $group_prefix == "api")throw new Exception('no group');
+        return $group_prefix;
     }
 
     static function getCtFromRequest(){
