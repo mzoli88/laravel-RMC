@@ -60,9 +60,13 @@ class RMC
 
 
     public function doList(){
+        $model = new $this->model;
         $query = $this->model::query();
         if(method_exists($this,'select')){
             Select::do($query,call_user_func_array([$this,'select'],['list']));
+        }
+        if(method_exists($model,'search')){
+            new Search($query,$model->search());
         }
         return $query;
     }
